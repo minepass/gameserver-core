@@ -1,0 +1,134 @@
+/*
+ *  This file is part of MinePass, licensed under the MIT License (MIT).
+ *
+ *  Copyright (c) MinePass.net <http://www.minepass.net>
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+ext.coreEnv = hasProperty('env') ? env : 'development'
+
+group = 'net.minepass'
+archivesBaseName = 'minepass-gameserver'
+version = '1.0-SNAPSHOT'
+
+sourceSets {
+    embed
+    main {
+        compileClasspath += embed.output
+        runtimeClasspath += embed.output
+    }
+    test {
+        compileClasspath += embed.output
+        runtimeClasspath += embed.output
+    }
+}
+
+jar {
+    from sourceSets.embed.output
+    from sourceSets.main.output
+}
+
+javadoc {
+    classpath = sourceSets.main.compileClasspath
+}
+
+task buildInfo {
+    def cmd = "git rev-parse --short HEAD"
+    def proc = cmd.execute()
+    project.ext.revision = proc.text.trim()
+    project.ext.timestamp = (int)(new Date().getTime()/1000)
+}
+
+processResources {
+    filter ReplaceTokens, tokens:[VERSION: project.version, REVISION: project.revision]
+}
+
+if (project.coreEnv == "core_dev") {
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives javadocJar, sourcesJar
+    }
+
+    signing {
+        sign configurations.archives
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom.project {
+                    name 'MinePass Game Server (Core Library)'
+                    packaging 'jar'
+                    description 'Shared library used by MinePass game server plugins.'
+                    url 'https://github.com/minepass'
+
+                    scm {
+                        connection 'scm:git:https://github.com/minepass/gameserver-core.git'
+                        developerConnection 'scm:git:https://github.com/minepass/gameserver-core.git'
+                        url 'https://github.com/minepass/gameserver-core.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'MIT'
+                            url 'http://opensource.org/licenses/MIT'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'sovereign'
+                            name 'MinePass Sovereign'
+                            email 'sovereign@minepass.net'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

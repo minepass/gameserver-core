@@ -1,0 +1,3 @@
+[submodule "src/embed/repo/solidtx"]
+	path = src/embed/repo/solidtx
+	url = https://github.com/org-binbab/solid-tx.git
