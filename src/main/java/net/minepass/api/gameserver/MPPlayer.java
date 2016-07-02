@@ -29,11 +29,41 @@ import net.minepass.api.gameserver.embed.solidtx.txo.TxField;
 
 public class MPPlayer extends TxBaseObject {
 
+    /**
+     * Player in-game-name.
+     */
     @TxField
     public String name;
 
+    /**
+     * Player realm.
+     */
+    @TxField
+    public String realm;
+
+    /**
+     * Player pass type.
+     */
     @TxField
     public String type;
+
+    /**
+     * Player role code.
+     */
+    @TxField
+    public String role;
+
+    /**
+     * Gameserver specific player authentication secret.
+     */
+    @TxField(optional = true)
+    public String secret;
+
+    /**
+     * Gameserver specific player privileges.
+     */
+    @TxField(optional = true)
+    public String[] privileges;
 
     @TxField
     public Integer valid_from;
@@ -44,11 +74,10 @@ public class MPPlayer extends TxBaseObject {
     @TxField
     public Boolean has_admin_role;
 
-    public boolean isCurrent(MinePass minepass) {
+    public boolean isPassCurrent(MinePass minepass) {
         if (valid_to != null) {
             return valid_to > minepass.getCalibratedEpoch();
         }
-
         return true;
     }
 

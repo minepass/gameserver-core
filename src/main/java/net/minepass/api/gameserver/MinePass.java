@@ -40,17 +40,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class MinePass extends TxStack implements TxDynamicSync {
 
-    private static final JsonAdapter jsonAdapter = new JsonAdapter();
+    protected static final JsonAdapter jsonAdapter = new JsonAdapter();
 
-    private final int initSyncRetries = 3;
-    private URL endpoint;
-    private String serverUUID;
-    private String serverSecret;
-    private String variant;
+    protected final int initSyncRetries = 3;
+    protected URL endpoint;
+    protected String serverUUID;
+    protected String serverSecret;
+    protected String variant;
+    protected HashMap<String,String> variantConfig;
 
     @Override
     public String getVersion() {
@@ -66,28 +68,30 @@ public class MinePass extends TxStack implements TxDynamicSync {
         return variant;
     }
 
-    public MinePass(String variant, String api_host, String server_uuid, String server_secret) throws MPConfigException, MPStartupException {
+    public MinePass(MPConfig c) throws MPConfigException, MPStartupException {
         super();
 
-        this.variant = variant;
+        this.variant = c.variant;
+        this.variantConfig = c.variant_config;
 
-        if (api_host == null || api_host.isEmpty()) {
+        if (c.api_host == null || c.api_host.isEmpty()) {
             throw new MPConfigException("MinePass API host must be provided.");
         }
 
-        if (server_uuid == null || server_uuid.isEmpty()) {
+        if (c.server_uuid == null || c.server_uuid.isEmpty()) {
             throw new MPConfigException("MinePass server UUID must be provided.");
         } else {
-            this.serverUUID = server_uuid;
+            this.serverUUID = c.server_uuid;
         }
 
-        if (server_secret == null || server_secret.isEmpty()) {
+        if (c.server_secret == null || c.server_secret.isEmpty()) {
             throw new MPConfigException("MinePass server secret-key must be provided.");
         } else {
-            this.serverSecret = server_secret;
+            this.serverSecret = c.server_secret;
         }
 
         try {
+            String api_host = c.api_host;
             if ( ! api_host.matches(".*\\.minepass\\.net(:[0-9]+)?") ) {
                 throw new MPConfigException("Invalid MinePass API host. (" + api_host + ")");
             }
@@ -287,7 +291,7 @@ public class MinePass extends TxStack implements TxDynamicSync {
     // Properties FIle
     // ------------------------------------------------------------------------------------------------------------- //
 
-    private static final Properties properties;
+    protected static final Properties properties;
 
     static {
         InputStream inputStream = MinePass.class.getResourceAsStream("/minepass.properties");

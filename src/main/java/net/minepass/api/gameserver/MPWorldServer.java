@@ -51,8 +51,16 @@ public class MPWorldServer extends TxBaseObject {
     public Long reload_epoch;
 
     @TxField
+    public MPPlayer founder;
+
+    @TxField
     public MPPlayer[] players;
 
+    /**
+     * Maps in-game-name to uuid or other gameserver specific
+     * bypass information. Guaranteed to not overlap with
+     * players field.
+     */
     @TxField
     public Map<String,String> bypass_players;
 
@@ -61,20 +69,6 @@ public class MPWorldServer extends TxBaseObject {
      */
     @TxField
     public Long maintenance_epoch;
-
-    /**
-     * Temporary location. Life-cycles will eventually be policy
-     * based and moved to the player pass.
-     */
-    @TxField
-    public Integer lifecycle_default_mode;
-
-    /**
-     * Temporary location. Life-cycles will eventually be policy
-     * based and moved to the player pass.
-     */
-    @TxField
-    public Integer lifecycle_visitor_mode;
 
     public boolean isPlayerWhitelisted(UUID player_uuid) {
         for (MPPlayer p : players) {
@@ -85,9 +79,9 @@ public class MPWorldServer extends TxBaseObject {
         return false;
     }
 
-    public boolean isPlayerBypassed(UUID player_uuid) {
-        for (String uuid : bypass_players.keySet()) {
-            if (UUID.fromString(uuid).equals(player_uuid)) {
+    public boolean isPlayerBypassed(UUID player_uuid, String player_name) {
+        for (String name : bypass_players.keySet()) {
+            if (player_name.equalsIgnoreCase(name)) {
                 return true;
             }
         }

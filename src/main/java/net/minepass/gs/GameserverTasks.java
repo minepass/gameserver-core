@@ -55,7 +55,7 @@ public abstract class GameserverTasks {
         MPWorldServer server = minepass.getServer();
         if (!server.reload_epoch.equals(reloadLastEpoch)) {
             this.reloadLastEpoch = server.reload_epoch;
-            updateAndReloadLocalWhitelist();
+            updateAndReloadLocalAuth();
         }
 
         Map<UUID, String> currentPlayers = getCurrentPlayers();
@@ -80,7 +80,7 @@ public abstract class GameserverTasks {
              * unauthorized on this server, then kick unless bypassed.
              */
             if (player == null) {
-                if (minepass.getServer().isPlayerBypassed(playerId)) {
+                if (minepass.getServer().isPlayerBypassed(playerId, playerName)) {
                     if (justLoggedIn) {
                         minepass.log.warn("Not kicking player ".concat(playerName).concat(" because they are on the import/bypass list."), this);
                         warnPlayerPass(playerId, "MinePass: You are bypassed.");
@@ -91,7 +91,7 @@ public abstract class GameserverTasks {
             } else {
                 // Ensure player is valid.
                 //
-                if (!player.isCurrent(minepass)) {
+                if (!player.isPassCurrent(minepass)) {
                     kickPlayer(playerId, "Your world pass is expired. " + getJoinUrl());
                 }
                 if (!player.name.equalsIgnoreCase(playerName)) {
@@ -133,7 +133,7 @@ public abstract class GameserverTasks {
      */
     abstract protected Map<UUID, String> getCurrentPlayers();
 
-    abstract protected void updateAndReloadLocalWhitelist();
+    abstract protected void updateAndReloadLocalAuth();
 
     abstract protected void kickPlayer(UUID playerId, String message);
 

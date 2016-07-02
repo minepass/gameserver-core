@@ -38,7 +38,19 @@ import java.util.List;
 public class MPWorldServerDetails extends TxBaseObject {
 
     @TxField
+    public String plugin_type;
+
+    @TxField
+    public String plugin_version;
+
+    @TxField
+    public String game_realm;
+
+    @TxField
     public String game_version;
+
+    @TxField(optional = true)
+    public String game_version_raw;
 
     @TxField
     public List<String[]> plugins;  // [ [ NAME, VERSION, MAIN_CLASS ], ... ]
@@ -54,18 +66,29 @@ public class MPWorldServerDetails extends TxBaseObject {
         plugins.add(new String[]{name, version, mainClass});
     }
 
+    public void importWhitelist(String whitelist) {
+        importWhitelist(whitelist.getBytes());
+    }
+
     public void importWhitelist(File whitelist) {
         if (!whitelist.exists()) {
-            import_whitelist_base64 = "=";
+            importWhitelist(new byte[]{});
             return;
         }
 
         try {
-            byte[] wlBytes = Files.readAllBytes(Paths.get(whitelist.getPath()));
-            import_whitelist_base64 = DatatypeConverter.printBase64Binary(wlBytes);
+            importWhitelist(Files.readAllBytes(Paths.get(whitelist.getPath())));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot read whitelist to import.", e);
+        }
+    }
+
+    public void importWhitelist(byte[] whitelist) {
+        if (whitelist.length == 0) {
+            import_whitelist_base64 = "=";
+        } else {
+            import_whitelist_base64 = DatatypeConverter.printBase64Binary(whitelist);
         }
     }
 

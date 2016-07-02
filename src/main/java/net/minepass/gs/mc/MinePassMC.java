@@ -24,6 +24,7 @@
 
 package net.minepass.gs.mc;
 
+import net.minepass.api.gameserver.MPConfig;
 import net.minepass.api.gameserver.MPConfigException;
 import net.minepass.api.gameserver.MPPlayer;
 import net.minepass.api.gameserver.MPStartupException;
@@ -46,8 +47,8 @@ public class MinePassMC extends MinePass {
     static public final File whitelistFile = new File("whitelist.json");
     static public final File whitelistBackupFile = new File("whitelist.json.mpimport");
 
-    public MinePassMC(String variant, String api_host, String server_uuid, String server_secret) throws MPConfigException, MPStartupException {
-        super(variant, api_host, server_uuid, server_secret);
+    public MinePassMC(MPConfig config) throws MPConfigException, MPStartupException {
+        super(config);
 
         if (!whitelistFile.isFile()) {
             throw new MPConfigException("Could not locate whitelist.json");

@@ -28,14 +28,14 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 ext.coreEnv = hasProperty('env') ? env : 'development'
 
 group = 'net.minepass'
 archivesBaseName = 'minepass-gameserver'
-version = '1.0-SNAPSHOT'
+version = '2.0-SNAPSHOT'
 
 sourceSets {
     embed
@@ -124,11 +124,15 @@ if (project.coreEnv == "core_dev") {
                         developer {
                             id 'sovereign'
                             name 'MinePass Sovereign'
-                            email 'sovereign@minepass.net'
+                            email 'git+sovereign@minepass.net'
                         }
                     }
                 }
             }
         }
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
 }
