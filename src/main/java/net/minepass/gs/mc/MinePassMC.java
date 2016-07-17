@@ -89,7 +89,7 @@ public class MinePassMC extends MinePass {
             ja.add(getPlayerWhitelistJSON(p));
         }
         for (String uuid : server.bypass_players.keySet()) {
-            ja.add(getPlayerWhitelistJSON(uuid, server.bypass_players.get(uuid)));
+            ja.add(getPlayerWhitelistJSON(server.bypass_players.get(uuid), uuid));
         }
         return ja;
     }

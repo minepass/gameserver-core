@@ -28,6 +28,7 @@ import net.minepass.api.gameserver.MPPlayer;
 import net.minepass.api.gameserver.MPWorldServer;
 import net.minepass.api.gameserver.MinePass;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -48,6 +49,7 @@ public abstract class GameserverTasks {
     public GameserverTasks(MinePass minepass) {
         this.minepass = minepass;
         this.reloadLastEpoch = minepass.getServer().reload_epoch;
+        this.lastSeenPlayerIds = Collections.emptySet();
     }
 
     public void runTasks() {
@@ -62,7 +64,6 @@ public abstract class GameserverTasks {
         Long maintMinutes = minepass.getMinutesUntilServerMaintenance();
 
         // Check current players (kick where invalid).
-        checkPlayers:
         for (UUID playerId : currentPlayers.keySet()) {
             String playerName = currentPlayers.get(playerId);
             MPPlayer player = minepass.getPlayer(playerId);
@@ -86,7 +87,7 @@ public abstract class GameserverTasks {
                         warnPlayerPass(playerId, "MinePass: You are bypassed.");
                     }
                 } else {
-                    kickPlayer(playerId, "You do not have a World Pass for this server. " + getJoinUrl());
+                    kickPlayer(playerId, "You do not have a MinePass for this server. " + getJoinUrl());
                 }
             } else {
                 // Ensure player is valid.
