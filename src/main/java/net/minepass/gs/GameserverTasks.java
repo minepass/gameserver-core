@@ -72,7 +72,7 @@ public abstract class GameserverTasks {
             // Kick if in maintenance.
             if (maintMinutes != null && maintMinutes < 1) {
                 if (player == null || !player.has_admin_role) {
-                    kickPlayer(playerId, "Server under maintenance.");
+                    kickPlayerNext(justLoggedIn, playerId, "Server under maintenance.");
                 }
             }
 
@@ -87,16 +87,22 @@ public abstract class GameserverTasks {
                         warnPlayerPass(playerId, "MinePass: You are bypassed.");
                     }
                 } else {
-                    kickPlayer(playerId, "You do not have a MinePass for this server. " + getJoinUrl());
+                    kickPlayerNext(justLoggedIn, playerId,
+                            "You do not have a MinePass for this server. " + getJoinUrl()
+                    );
                 }
             } else {
                 // Ensure player is valid.
                 //
                 if (!player.isPassCurrent(minepass)) {
-                    kickPlayer(playerId, "Your world pass is expired. " + getJoinUrl());
+                    kickPlayerNext(justLoggedIn, playerId,
+                            "Your world pass is expired. " + getJoinUrl()
+                    );
                 }
                 if (!player.name.equalsIgnoreCase(playerName)) {
-                    kickPlayer(playerId, "Your name has changed, please re-verify your player. " + getJoinUrl());
+                    kickPlayerNext(justLoggedIn, playerId,
+                            "Your name has changed, please re-verify your player. " + getJoinUrl()
+                    );
                 }
             }
         }
@@ -126,6 +132,24 @@ public abstract class GameserverTasks {
     protected void warnAllPlayers(String message) {
         for (UUID playerId : getCurrentPlayers().keySet()) {
             warnPlayer(playerId, message);
+        }
+    }
+
+    /**
+     * Kick player unless just logged in.
+     *
+     * Some clients will raise broken pipe errors if the server kicks
+     * the player quickly after login. This helper is for code clarity
+     * and effectively causes players to be kicked on the next run
+     * of GameserverTasks.
+     *
+     * @param justLoggedIn player recent logged in
+     * @param playerId player uuid
+     * @param message kick message
+     */
+    protected void kickPlayerNext(Boolean justLoggedIn, UUID playerId, String message) {
+        if (!justLoggedIn) {
+            kickPlayer(playerId, message);
         }
     }
 
