@@ -213,6 +213,7 @@ public class MinePass extends TxStack implements TxDynamicSync {
 
         addRoute(MPWorldServer.class, gw, "world-server");
         addRoute(MPWorldServerDetails.class, gw, "world-server-details");
+        addRoute(MPWorldServerMetric.class, gw, "world-server-metric");
         addRoute(MPPlayer.class, gw, "player");
     }
 

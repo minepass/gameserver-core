@@ -26,6 +26,7 @@ package net.minepass.gs;
 
 import net.minepass.api.gameserver.MPPlayer;
 import net.minepass.api.gameserver.MPWorldServer;
+import net.minepass.api.gameserver.MPWorldServerMetric;
 import net.minepass.api.gameserver.MinePass;
 
 import java.util.Collections;
@@ -42,6 +43,8 @@ public abstract class GameserverTasks {
 
     private MinePass minepass;
     private Long reloadLastEpoch;
+    private Long metricLastEpoch;
+    private Integer metricIntervalSeconds = 60;
     private Set<UUID> lastSeenPlayerIds;
     private int[] maintenceWarnings = new int[]{1, 5, 10, 15, 30, 60};
     private Integer lastMaintenanceWarning;
@@ -49,6 +52,7 @@ public abstract class GameserverTasks {
     public GameserverTasks(MinePass minepass) {
         this.minepass = minepass;
         this.reloadLastEpoch = minepass.getServer().reload_epoch;
+        this.metricLastEpoch = null;
         this.lastSeenPlayerIds = Collections.emptySet();
     }
 
@@ -62,6 +66,12 @@ public abstract class GameserverTasks {
 
         Map<UUID, String> currentPlayers = getCurrentPlayers();
         Long maintMinutes = minepass.getMinutesUntilServerMaintenance();
+
+        MPWorldServerMetric metric = null;
+        if (metricLastEpoch == null || System.currentTimeMillis()/1000 - metricLastEpoch > metricIntervalSeconds) {
+            metric = new MPWorldServerMetric();
+            metricLastEpoch = System.currentTimeMillis()/1000;
+        }
 
         // Check current players (kick where invalid).
         for (UUID playerId : currentPlayers.keySet()) {
@@ -98,11 +108,12 @@ public abstract class GameserverTasks {
                     kickPlayerNext(justLoggedIn, playerId,
                             "Your world pass is expired. " + getJoinUrl()
                     );
-                }
-                if (!player.name.equalsIgnoreCase(playerName)) {
+                } else if (!player.name.equalsIgnoreCase(playerName)) {
                     kickPlayerNext(justLoggedIn, playerId,
                             "Your name has changed, please re-verify your player. " + getJoinUrl()
                     );
+                } else if (metric != null) {
+                    metric.addOnlinePlayer(player);
                 }
             }
         }
@@ -122,6 +133,11 @@ public abstract class GameserverTasks {
                     break;
                 }
             }
+        }
+
+        // Transmit server metric.
+        if (metric != null) {
+            minepass.sendObject(metric, null);
         }
     }
 
