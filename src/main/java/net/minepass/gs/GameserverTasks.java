@@ -94,7 +94,7 @@ public abstract class GameserverTasks {
                 if (minepass.getServer().isPlayerBypassed(playerId, playerName)) {
                     if (justLoggedIn) {
                         minepass.log.warn("Not kicking player ".concat(playerName).concat(" because they are on the import/bypass list."), this);
-                        warnPlayerPass(playerId, "MinePass: You are bypassed.");
+                        warnPlayerPass(playerId, "MinePass: You are an imported player.");
                     }
                 } else {
                     kickPlayerNext(justLoggedIn, playerId,
@@ -106,7 +106,7 @@ public abstract class GameserverTasks {
                 //
                 if (!player.isPassCurrent(minepass)) {
                     kickPlayerNext(justLoggedIn, playerId,
-                            "Your world pass is expired. " + getJoinUrl()
+                            "Your MinePass to this world is expired. " + getJoinUrl()
                     );
                 } else if (!player.name.equalsIgnoreCase(playerName)) {
                     kickPlayerNext(justLoggedIn, playerId,
