@@ -36,6 +36,12 @@ public class MPWorldServer extends TxBaseObject {
     public UUID world_id;
 
     @TxField
+    public String world_name;
+
+    @TxField
+    public String world_greeting;
+
+    @TxField
     public String join_url;
 
     @TxField
