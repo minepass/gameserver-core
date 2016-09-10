@@ -9,8 +9,10 @@ public class MPConfig {
     public String api_host;
     public String server_uuid;
     public String server_secret;
+    public Boolean enforce_whitelist;
 
     public MPConfig() {
         this.variant_config = new HashMap<>();
+        this.enforce_whitelist = true;
     }
 }

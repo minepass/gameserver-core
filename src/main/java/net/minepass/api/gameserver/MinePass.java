@@ -51,6 +51,7 @@ public class MinePass extends TxStack implements TxDynamicSync {
     protected URL endpoint;
     protected String serverUUID;
     protected String serverSecret;
+    protected Boolean enforceWhitelist;
     protected String variant;
     protected HashMap<String,String> variantConfig;
 
@@ -89,6 +90,8 @@ public class MinePass extends TxStack implements TxDynamicSync {
         } else {
             this.serverSecret = c.server_secret;
         }
+
+        this.enforceWhitelist = c.enforce_whitelist;
 
         try {
             String api_host = c.api_host;
@@ -133,6 +136,10 @@ public class MinePass extends TxStack implements TxDynamicSync {
         if (getServer().maintenance_epoch < 0)
             return null;
         return Math.max(0L, getServer().maintenance_epoch  - getCalibratedEpoch()) / 60L;
+    }
+
+    public Boolean getEnforceWhitelist() {
+        return this.enforceWhitelist;
     }
 
     // Sync and Stack Setup

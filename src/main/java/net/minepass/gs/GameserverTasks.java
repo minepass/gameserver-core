@@ -88,18 +88,24 @@ public abstract class GameserverTasks {
 
             /**
              * If player is not registered in MinePass or otherwise
-             * unauthorized on this server, then kick unless bypassed.
+             * unauthorized on this server, then kick unless bypassed
+             * or option [enforce_whitelist]=false.
              */
             if (player == null) {
                 if (minepass.getServer().isPlayerBypassed(playerId, playerName)) {
                     if (justLoggedIn) {
                         minepass.log.warn("Not kicking player ".concat(playerName).concat(" because they are on the import/bypass list."), this);
-                        warnPlayerPass(playerId, "MinePass: You are an imported player.");
+                        warnPlayerPass(playerId, "Welcome ".concat(playerName).concat(". This world is now managed through MinePass. Your membership has been imported."));
                     }
-                } else {
+                } else if (minepass.getEnforceWhitelist()) {
                     kickPlayerNext(justLoggedIn, playerId,
                             "You do not have a MinePass for this server. " + getJoinUrl()
                     );
+                } else {
+                    if (justLoggedIn) {
+                        minepass.log.info("Not kicking player ".concat(playerName).concat(" because [enforce_whitelist]=false"), this);
+                        warnPlayerPass(playerId, minepass.getServer().world_greeting);
+                    }
                 }
             } else {
                 // Ensure player is valid.
