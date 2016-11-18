@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Responsible for initializing entities from raw data via the mapper chain.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.object.DataMapper
+ * @see DataMapper
  */
 public class ObjectManager {
 
@@ -82,7 +82,7 @@ public class ObjectManager {
     /**
      * Reload an existing entity.
      *
-     * @see #loadObject(net.minepass.api.gameserver.embed.solidtx.TxStack, ObjectState)
+     * @see #loadObject(TxStack, ObjectState)
      *
      * @param object the previously loaded entity
      * @param newState updated entity state

@@ -145,7 +145,7 @@ public class DataSet {
 
     /**
      * Generate a DataIndex for this DataSet
-     * @see net.minepass.api.gameserver.embed.solidtx.core.data.DataIndex
+     * @see DataIndex
      * @return the index
      */
     public DataIndex getIndex() {

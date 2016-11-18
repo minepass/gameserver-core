@@ -17,8 +17,8 @@ import java.io.InputStream;
  * Responsible for encoding/decoding Payloads and PayloadRequests
  * between byte data and/or io streams.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.Payload
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.PayloadRequest
+ * @see Payload
+ * @see PayloadRequest
  */
 public interface NetworkAdapter {
 

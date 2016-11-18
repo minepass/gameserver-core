@@ -23,8 +23,8 @@ package net.minepass.api.gameserver.embed.solidtx.core.storage;
  *
  * See Container for more information.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.storage.Container
- * @see net.minepass.api.gameserver.embed.solidtx.core.storage.DataStore
+ * @see Container
+ * @see DataStore
  */
 public interface StorageAdapter {
 

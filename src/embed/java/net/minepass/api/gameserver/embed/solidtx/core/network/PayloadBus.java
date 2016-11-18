@@ -17,10 +17,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Links network Gateway to a set of DataRequests in order
  * to request/fetch the next Payload.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.Gateway
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.DataRequest
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.PayloadRequest
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.Payload
+ * @see Gateway
+ * @see DataRequest
+ * @see PayloadRequest
+ * @see Payload
  */
 public class PayloadBus {
 

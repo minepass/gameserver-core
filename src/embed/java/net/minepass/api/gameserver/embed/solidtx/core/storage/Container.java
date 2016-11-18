@@ -28,8 +28,8 @@ package net.minepass.api.gameserver.embed.solidtx.core.storage;
  *   1 = Separate data groups and attributes.
  *   2 = Separate entities and attributes.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.storage.DataStore
- * @see net.minepass.api.gameserver.embed.solidtx.core.storage.StorageAdapter
+ * @see DataStore
+ * @see StorageAdapter
  */
 public abstract class Container {
 

@@ -23,7 +23,7 @@ public class ObjectRoute {
 
     /**
      * Should only be created by Router.
-     * @see Router#addRoute(Class, net.minepass.api.gameserver.embed.solidtx.core.network.Gateway, String, int)
+     * @see Router#addRoute(Class, Gateway, String, int)
      */
     protected ObjectRoute(Class objectClass, Gateway gateway, String dataGroup, int channel) {
         this.objectClass = objectClass;

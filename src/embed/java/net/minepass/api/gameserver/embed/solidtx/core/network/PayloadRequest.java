@@ -28,10 +28,10 @@ import java.util.Queue;
  * and reflect the last set of attributes provided by the
  * Gateway (if applicable).
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.Payload
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.DataRequest
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.Gateway
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.NetworkAdapter
+ * @see Payload
+ * @see DataRequest
+ * @see Gateway
+ * @see NetworkAdapter
  */
 public class PayloadRequest {
 

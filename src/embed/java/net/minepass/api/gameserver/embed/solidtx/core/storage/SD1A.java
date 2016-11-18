@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * @see net.minepass.api.gameserver.embed.solidtx.core.storage.StorageAdapter
+ * @see StorageAdapter
  */
 public interface SD1A extends SD0A {
 

@@ -34,7 +34,7 @@ public class DataStore extends DataSet {
     /**
      * Create new DataStore linked to a storage Container.
      *
-     * @see net.minepass.api.gameserver.embed.solidtx.core.storage.Container
+     * @see Container
      * @param container the container to load/save to.
      */
     public DataStore(String stackVersion, Container container) {

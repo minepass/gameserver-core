@@ -9,6 +9,7 @@
 
 package net.minepass.api.gameserver.embed.solidtx.core.storage;
 
+import net.minepass.api.gameserver.embed.solidtx.core.network.Gateway;
 import net.minepass.api.gameserver.embed.solidtx.core.network.Payload;
 import net.minepass.api.gameserver.embed.solidtx.core.router.ObjectRoute;
 
@@ -19,8 +20,8 @@ import java.util.List;
  * Responsible for connecting DataStores and Containers,
  * and processing network payloads for storage updates.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.storage.DataStore
- * @see net.minepass.api.gameserver.embed.solidtx.core.storage.Container
+ * @see DataStore
+ * @see Container
  */
 public class StorageManager {
 
@@ -39,7 +40,7 @@ public class StorageManager {
      * Add container to manager which corresponds
      * to a network Gateway on the same channel.
      *
-     * @see net.minepass.api.gameserver.embed.solidtx.core.network.Gateway
+     * @see Gateway
      * @param container the container to add
      * @return the resulting channel
      */

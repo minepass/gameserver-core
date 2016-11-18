@@ -20,9 +20,9 @@ import net.minepass.api.gameserver.embed.solidtx.core.data.DataSet;
  * stored on a Gateway basis and sent along with the
  * next PayloadRequest.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.PayloadRequest
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.Gateway
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.NetworkAdapter
+ * @see PayloadRequest
+ * @see Gateway
+ * @see NetworkAdapter
  */
 public class Payload {
 

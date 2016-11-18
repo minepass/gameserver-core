@@ -9,6 +9,7 @@
 
 package net.minepass.api.gameserver.embed.solidtx.core.network;
 
+import net.minepass.api.gameserver.embed.solidtx.core.storage.Container;
 import net.minepass.api.gameserver.embed.solidtx.core.router.ObjectRoute;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class NetworkManager {
      * Add Gateway to manager which corresponds
      * to a storage Container on the same channel.
      *
-     * @see net.minepass.api.gameserver.embed.solidtx.core.storage.Container
+     * @see Container
      * @param gateway the gateway to add
      * @return the resulting channel
      */

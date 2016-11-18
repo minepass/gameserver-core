@@ -20,9 +20,9 @@ import java.io.InputStream;
  * the use of a NetworkAdapter, typically to/from raw
  * byte data.
  *
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.Payload
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.PayloadRequest
- * @see net.minepass.api.gameserver.embed.solidtx.core.network.NetworkAdapter
+ * @see Payload
+ * @see PayloadRequest
+ * @see NetworkAdapter
  */
 public abstract class Gateway {
 

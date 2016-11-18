@@ -21,8 +21,8 @@ This will copy the prefixed classes, resources, and txt-notices to the JAVA dire
 =========================================================================================
 
     solid-tx                        BinaryBabel OSS
-        0.0.4                       org.binbab.solidtx
-        MIT                         https://github.com/org-binbab/solid-tx
+        0.0.5                       org.binarybabel.solidtx
+        MIT                         https://github.com/binarybabel/solid-tx
 
     json-simple                     Yidong Fang
         1.1.1                       org.json.simple

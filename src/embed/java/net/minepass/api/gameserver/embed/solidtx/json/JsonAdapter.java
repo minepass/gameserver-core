@@ -9,6 +9,9 @@
 
 package net.minepass.api.gameserver.embed.solidtx.json;
 
+import net.minepass.api.gameserver.embed.solidtx.core.storage.DataStore;
+import net.minepass.api.gameserver.embed.solidtx.core.storage.StorageIndex;
+import net.minepass.api.gameserver.embed.solidtx.embed.json.parser.JSONParser;
 import net.minepass.api.gameserver.embed.solidtx.TxStack;
 import net.minepass.api.gameserver.embed.solidtx.core.data.DataIndex;
 import net.minepass.api.gameserver.embed.solidtx.core.data.DataSet;
@@ -17,11 +20,8 @@ import net.minepass.api.gameserver.embed.solidtx.core.network.NetworkAdapter;
 import net.minepass.api.gameserver.embed.solidtx.core.network.Payload;
 import net.minepass.api.gameserver.embed.solidtx.core.network.PayloadRequest;
 import net.minepass.api.gameserver.embed.solidtx.core.storage.SD0A;
-import net.minepass.api.gameserver.embed.solidtx.core.storage.DataStore;
 import net.minepass.api.gameserver.embed.solidtx.core.storage.StorageAdapter;
-import net.minepass.api.gameserver.embed.solidtx.core.storage.StorageIndex;
 import net.minepass.api.gameserver.embed.solidtx.embed.json.JSONObject;
-import net.minepass.api.gameserver.embed.solidtx.embed.json.parser.JSONParser;
 import net.minepass.api.gameserver.embed.solidtx.embed.json.parser.ParseException;
 
 import java.io.*;
@@ -128,12 +128,18 @@ public class JsonAdapter implements NetworkAdapter, StorageAdapter, SD0A {
     }
 
     @Override
-    public void decodeDataStore(DataStore output, InputStream input) throws IOException, ParseException {
+    public void decodeDataStore(DataStore output, InputStream input) throws IOException {
         BufferedReader r = new BufferedReader(new InputStreamReader(input));
-        JSONObject root = (JSONObject) parser.parse(r);
-        r.close();
-        output.setAttributes((Map) root.get("attr"));
-        output.setMap((Map<String, Map<String, Map<String, Object>>>) root.get("data"));
+        JSONObject root = null;
+        try {
+            root = (JSONObject) parser.parse(r);
+            output.setAttributes((Map) root.get("attr"));
+            output.setMap((Map<String, Map<String, Map<String, Object>>>) root.get("data"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            r.close();
+        }
     }
 
 }

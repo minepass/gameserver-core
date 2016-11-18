@@ -23,7 +23,7 @@ public class ObjectCache {
 
     /**
      * Should only be created by ObjectManager.
-     * @see net.minepass.api.gameserver.embed.solidtx.core.object.ObjectManager
+     * @see ObjectManager
      */
     protected ObjectCache() {
         cache = new HashMap<Class,Map<String,Object>>();

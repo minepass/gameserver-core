@@ -1,5 +1,8 @@
 # SolidTX - Network Data Object Stack
 
+[![Build Status](https://travis-ci.org/binarybabel/solid-tx.svg?branch=master)](https://travis-ci.org/binarybabel/solid-tx)
+[![Join the chat at https://gitter.im/solid-tx/Lobby](https://badges.gitter.im/solid-tx/Lobby.svg)](https://gitter.im/solid-tx/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Developed by BinaryBabel for the MinePass Network, and released open source for transparency and community benefit.
 
 SolidTX provides asynchronous bulk transfer of remote server data to/from Java objects,
@@ -58,12 +61,12 @@ medir -p embed/repo embed/java
 cd embed
 
 # From the embed directory...
-git submodule add https://github.com/org-binbab/solid-tx.git repo/solidtx
+git submodule add https://github.com/binarybabel/solid-tx.git repo/solidtx
 cp repo/solidtx/src/embed/* ./    # not recursively
   # this creates 'README.txt' and 'embed-tool.jar'
 
 # Embed into your namespace...
-java -jar embed-tool.jar solidtx org.binbab.solidtx YOUR_BASE_PACKAGE
+java -jar embed-tool.jar solidtx org.binarybabel.solidtx YOUR_BASE_PACKAGE
 ```
 
 For future updates simply `git pull` within the submodule and repeat the embed-tool.jar command.
@@ -99,9 +102,7 @@ javadoc {
 
 ## Contribution / Collaboration
 
-Please do not submit pull requests or issues at this time.
-
-For Q&A please use https://groups.google.com/d/forum/solid-tx
+For Q&A please use https://gitter.im/solid-tx/Lobby
 
 ## License
 

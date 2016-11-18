@@ -11,8 +11,8 @@ package net.minepass.api.gameserver.embed.solidtx.txo;
 
 import net.minepass.api.gameserver.embed.solidtx.TxStack;
 import net.minepass.api.gameserver.embed.solidtx.core.object.DataMapper;
-import net.minepass.api.gameserver.embed.solidtx.core.object.DataMapperException;
 import net.minepass.api.gameserver.embed.solidtx.core.object.ObjectState;
+import net.minepass.api.gameserver.embed.solidtx.core.object.DataMapperException;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

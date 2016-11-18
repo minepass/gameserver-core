@@ -16,12 +16,15 @@ import net.minepass.api.gameserver.embed.solidtx.core.network.Gateway;
 import net.minepass.api.gameserver.embed.solidtx.core.network.NetworkException;
 import net.minepass.api.gameserver.embed.solidtx.core.network.NetworkManager;
 import net.minepass.api.gameserver.embed.solidtx.core.network.Payload;
+import net.minepass.api.gameserver.embed.solidtx.core.object.DataMapper;
+import net.minepass.api.gameserver.embed.solidtx.core.router.ObjectRoute;
+import net.minepass.api.gameserver.embed.solidtx.core.router.Router;
+import net.minepass.api.gameserver.embed.solidtx.core.storage.Container;
+import net.minepass.api.gameserver.embed.solidtx.nulled.NullStorageContainer;
 import net.minepass.api.gameserver.embed.solidtx.core.network.PayloadBus;
 import net.minepass.api.gameserver.embed.solidtx.core.object.ObjectManager;
 import net.minepass.api.gameserver.embed.solidtx.core.object.ObjectState;
 import net.minepass.api.gameserver.embed.solidtx.core.router.MissingRouteException;
-import net.minepass.api.gameserver.embed.solidtx.core.router.ObjectRoute;
-import net.minepass.api.gameserver.embed.solidtx.core.router.Router;
 import net.minepass.api.gameserver.embed.solidtx.core.storage.StorageManager;
 import net.minepass.api.gameserver.embed.solidtx.txo.TxDataMapper;
 
@@ -70,8 +73,8 @@ public abstract class TxStack {
      * raw data to objects. Each mapper is executed
      * in the order it is added to the stack.
      *
-     * @see net.minepass.api.gameserver.embed.solidtx.core.object.ObjectManager
-     * @see net.minepass.api.gameserver.embed.solidtx.core.object.DataMapper
+     * @see ObjectManager
+     * @see DataMapper
      * @param om the object manager passed in by #setup()
      */
     protected void setupMappers(ObjectManager om) {
@@ -85,9 +88,9 @@ public abstract class TxStack {
      * Each gateway is responsible for transmitting object
      * data for a set of objects linked via routes.
      *
-     * @see net.minepass.api.gameserver.embed.solidtx.core.network.NetworkManager
-     * @see net.minepass.api.gameserver.embed.solidtx.core.network.Gateway
-     * @see net.minepass.api.gameserver.embed.solidtx.core.router.ObjectRoute
+     * @see NetworkManager
+     * @see Gateway
+     * @see ObjectRoute
      * @param nm the network manager passed by #setup()
      */
     abstract protected void setupNetwork(NetworkManager nm);
@@ -101,9 +104,9 @@ public abstract class TxStack {
      *
      * A null container is available to bypass local storage.
      *
-     * @see net.minepass.api.gameserver.embed.solidtx.core.storage.StorageManager
-     * @see net.minepass.api.gameserver.embed.solidtx.core.storage.Container
-     * @see net.minepass.api.gameserver.embed.solidtx.nulled.NullStorageContainer
+     * @see StorageManager
+     * @see Container
+     * @see NullStorageContainer
      * @param sm the storage manager passed by #setup()
      */
     abstract protected void setupStorage(StorageManager sm);
@@ -239,7 +242,7 @@ public abstract class TxStack {
      * the exception is returned as a parameter.
      *
      * @see #run()
-     * @see net.minepass.api.gameserver.embed.solidtx.TxFn
+     * @see TxFn
      * @param objectClass the entity class
      * @param id the entity id
      * @param fn the callback function

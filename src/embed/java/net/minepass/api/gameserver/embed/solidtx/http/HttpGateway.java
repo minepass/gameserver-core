@@ -9,8 +9,8 @@
 
 package net.minepass.api.gameserver.embed.solidtx.http;
 
-import net.minepass.api.gameserver.embed.solidtx.core.network.NetworkAdapter;
 import net.minepass.api.gameserver.embed.solidtx.core.network.Gateway;
+import net.minepass.api.gameserver.embed.solidtx.core.network.NetworkAdapter;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
