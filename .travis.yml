@@ -1,0 +1,17 @@
+language: java
+jdk:
+- oraclejdk8
+addons:
+  artifacts:
+    paths:
+    - $(ls ./build/libs/*.jar | tr "\n" ":")
+deploy:
+  provider: s3
+  access_key_id: AKIAJV4IZMBHN7USQBEQ
+  secret_access_key:
+    secure: NQDkz5fRygJAXCzA+M+mbI+ZHY2O0FZHSPZRFa2GLE+qp5JQu/tXS8U9FtwF2YEBoKqdmC+IOEj1geV/5qfq33fv3v7/+cxIV9tsdors8icy8qFHybg0HCVY77/e0Qo5pM7FWVtMyDNOjkgfVBacG9hsUdJdlzWJEuux9YqXPmO0UAmuI+Z/iWBJGupySSEGULdK0+Fc6hNh6ksT7ObKgZauJM77wNYUElFOAP5ZyoMneTbxTvSRrkUN+GoLyLpGtUTuUqQVd5B9pIoSO8URpD6ah5H2CFtl0jrl66DOpceH80wFZh6K2A/lOR3ZrNMtGnXHBHm4QCs5cwoSR9aIIA3/bP+5b8t5Cb1tXdaR8//CQ4nxrEqPSUv0huRyJSrrjquPh8JE+Laj6q/V34m6Aua3WANjXQiOjc9NzBz+lcAJcRCZAOONbuTnSFA59recjDpzHhWWAbTeW1r6JJgj0A8tIz/u24XX0EUYtJq8OLDezevddnOsNftkUua+YtlvXJn3XZDeI6oTcTvX/ZbEIlE++JgV3Q2wOrSb2fHq0iaGdHDsbp/JkxXbwJ7wMV2btgFWvyZhQFb4kPDpaNw1y6usmmgMUEoewj6xYLHmWXtvO+zcEKd3DIh1dTmtEHw9V+gjvW+lobd8sZ2bMoA80aekGFu9JloCQ7Sx3ipTtGQ=
+  bucket: minepass-artifacts
+  skip_cleanup: true
+  local-dir: build/libs
+  upload-dir: latest
+  acl: public_read
